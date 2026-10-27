@@ -1,0 +1,60 @@
+
+/* BizzareWorldOfStories — Visual design */
+
+:root {
+    --background: #090b18;
+    --surface: #13172b;
+    --purple: #a78bfa;
+    --text: #f4f2ff;
+    --muted: #aaaac2;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    line-height: 1.7;
+}
+
+header {
+    padding: 80px 20px;
+    text-align: center;
+    background: linear-gradient(
+        135deg,
+        #17132e,
+        #101b35,
+        #24143b
+    );
+}
+
+h1 {
+    margin-bottom: 12px;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: -1px;
+}
+
+header p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--muted);
+}
+
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+h2 {
+    color: var(--purple);
+}
+
+::selection {
+    background: var(--purple);
+    color: #090b18;
+}
