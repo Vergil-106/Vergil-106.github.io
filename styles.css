@@ -1,60 +1,245 @@
 
-/* BizzareWorldOfStories — Visual design */
+/* BizzareWorldOfStories — Cosmic identity */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-    --background: #090b18;
-    --surface: #13172b;
-    --purple: #a78bfa;
+    color-scheme: dark;
+    --background: #080b1c;
+    --surface: #111630;
+    --surface-light: #191e40;
+    --purple: #8b7cff;
+    --blue: #72bfff;
     --text: #f4f2ff;
     --muted: #aaaac2;
+    --border: rgba(174, 165, 255, 0.17);
 }
 
 * {
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
-    background: var(--background);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(
+            ellipse at 15% 5%,
+            rgba(73, 56, 158, 0.23),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 90% 35%,
+            rgba(32, 86, 163, 0.15),
+            transparent 35%
+        ),
+        var(--background);
     color: var(--text);
-    font-family: Arial, sans-serif;
-    line-height: 1.7;
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.75;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.2;
+    background-image:
+        radial-gradient(1px 1px at 12% 18%, #ffffff 99%, transparent),
+        radial-gradient(1px 1px at 77% 24%, #b9caff 99%, transparent),
+        radial-gradient(2px 2px at 42% 67%, #ffffff 99%, transparent),
+        radial-gradient(1px 1px at 88% 82%, #c9baff 99%, transparent),
+        radial-gradient(1px 1px at 25% 91%, #ffffff 99%, transparent);
+    background-size: 310px 290px;
 }
 
 header {
-    padding: 80px 20px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(76px, 13vw, 150px) 24px;
     text-align: center;
-    background: linear-gradient(
-        135deg,
-        #17132e,
-        #101b35,
-        #24143b
-    );
+    border-bottom: 1px solid var(--border);
+    background:
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(104, 73, 220, 0.24),
+            transparent 55%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(20, 22, 55, 0.92),
+            rgba(8, 11, 28, 0.82) 65%,
+            rgba(23, 25, 62, 0.92)
+        );
 }
 
-h1 {
-    margin-bottom: 12px;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    letter-spacing: -1px;
+header::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 340px;
+    height: 340px;
+    top: -230px;
+    left: calc(50% - 170px);
+    border: 1px solid rgba(139, 124, 255, 0.3);
+    border-radius: 50%;
+    box-shadow:
+        0 0 70px rgba(98, 85, 217, 0.13),
+        inset 0 0 70px rgba(98, 85, 217, 0.1);
+}
+
+header h1 {
+    max-width: 1000px;
+    margin: 0 auto 18px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.8rem, 7vw, 5.8rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    background: linear-gradient(
+        110deg,
+        #ffffff 15%,
+        #c6c1ff 52%,
+        #83caff 90%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 header p {
-    max-width: 600px;
+    max-width: 570px;
     margin: 0 auto;
     color: var(--muted);
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
 }
 
 main {
-    max-width: 1000px;
+    width: min(1100px, 100%);
     margin: 0 auto;
-    padding: 40px 24px;
+    padding: clamp(42px, 7vw, 84px) 24px;
 }
 
-h2 {
-    color: var(--purple);
+main h2 {
+    margin: 0 0 8px;
+    color: #d5ceff;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.1rem, 4vw, 3.2rem);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+main > p {
+    margin-top: 0;
+    color: var(--muted);
+}
+
+.stories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 32px;
+}
+
+.story-card {
+    position: relative;
+    overflow: hidden;
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(28, 34, 70, 0.86),
+            rgba(15, 19, 42, 0.96)
+        );
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14);
+    transition:
+        transform 220ms ease,
+        border-color 220ms ease,
+        box-shadow 220ms ease;
+}
+
+.story-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 28px;
+    width: 56px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--purple), var(--blue));
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(139, 124, 255, 0.55);
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.25),
+        0 0 28px rgba(98, 85, 217, 0.1);
+}
+
+.story-card h3 {
+    margin: 0 0 8px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.story-card p {
+    color: var(--muted);
+}
+
+.story-card .story-genre {
+    display: inline-block;
+    margin: 0 0 10px;
+    color: var(--blue);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
 }
 
 ::selection {
     background: var(--purple);
-    color: #090b18;
+    color: var(--background);
+}
+
+@media (max-width: 640px) {
+    header {
+        padding: 84px 20px;
+    }
+
+    main {
+        padding: 48px 18px;
+    }
+
+    .stories-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .story-card {
+        padding: 24px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
 }
