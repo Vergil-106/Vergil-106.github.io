@@ -50,8 +50,15 @@
                     const description = document.createElement("p");
                     description.textContent = story.description;
 
-                    card.append(title, genre, description);
-                    container.appendChild(card);
+                    const storyLink = document.createElement("a");
+
+storyLink.href = "story.html?id=" + encodeURIComponent(story.id);
+storyLink.className = "story-card-link";
+
+storyLink.append(title, genre, description);
+card.appendChild(storyLink);
+
+container.appendChild(card);
                 });
 
                 if (stories.length === 0) {
