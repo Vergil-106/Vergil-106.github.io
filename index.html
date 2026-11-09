@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +16,57 @@
     <main>
         <h2>Explore Stories</h2>
         <p>Your next favourite story is waiting to be discovered.</p>
+
+        <section id="stories" class="stories-grid">
+            <p>Loading stories...</p>
+        </section>
     </main>
+
+    <script>
+        async function loadStories() {
+            const container = document.getElementById("stories");
+
+            try {
+                const response = await fetch("./stories.json");
+
+                if (!response.ok) {
+                    throw new Error("Could not load stories.");
+                }
+
+                const stories = await response.json();
+                container.replaceChildren();
+
+                stories.forEach(story => {
+                    const card = document.createElement("article");
+                    card.className = "story-card";
+
+                    const title = document.createElement("h3");
+                    title.textContent = story.title;
+
+                    const genre = document.createElement("p");
+                    genre.className = "story-genre";
+                    genre.textContent = story.genre;
+
+                    const description = document.createElement("p");
+                    description.textContent = story.description;
+
+                    card.append(title, genre, description);
+                    container.appendChild(card);
+                });
+
+                if (stories.length === 0) {
+                    container.textContent = "New stories are coming soon!";
+                }
+
+            } catch (error) {
+                container.textContent =
+                    "We couldn't load the stories. Please try again later.";
+                console.error(error);
+            }
+        }
+
+        loadStories();
+    </script>
 </body>
 </html>
+```
