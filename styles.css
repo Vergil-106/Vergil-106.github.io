@@ -1,10 +1,12 @@
 
-/* BizzareWorldOfStories — Cosmic identity */
+/* =========================================
+   BizzareWorldOfStories
+   Cosmic Fantasy — Visual Design
+   ========================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-    color-scheme: dark;
     --background: #080b1c;
     --surface: #111630;
     --surface-light: #191e40;
@@ -27,6 +29,7 @@ body {
     margin: 0;
     min-height: 100vh;
     overflow-x: hidden;
+
     background:
         radial-gradient(
             ellipse at 15% 5%,
@@ -39,10 +42,13 @@ body {
             transparent 35%
         ),
         var(--background);
+
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
-    line-height: 1.75;
+    line-height: 1.7;
 }
+
+/* Subtle celestial stars */
 
 body::before {
     content: "";
@@ -51,22 +57,31 @@ body::before {
     z-index: -1;
     pointer-events: none;
     opacity: 0.2;
+
     background-image:
         radial-gradient(1px 1px at 12% 18%, #ffffff 99%, transparent),
         radial-gradient(1px 1px at 77% 24%, #b9caff 99%, transparent),
         radial-gradient(2px 2px at 42% 67%, #ffffff 99%, transparent),
         radial-gradient(1px 1px at 88% 82%, #c9baff 99%, transparent),
         radial-gradient(1px 1px at 25% 91%, #ffffff 99%, transparent);
+
     background-size: 310px 290px;
 }
+
+/* =========================================
+   HEADER
+   ========================================= */
 
 header {
     position: relative;
     isolation: isolate;
     overflow: hidden;
+
     padding: clamp(76px, 13vw, 150px) 24px;
+
     text-align: center;
     border-bottom: 1px solid var(--border);
+
     background:
         radial-gradient(
             ellipse at 50% 100%,
@@ -85,12 +100,16 @@ header::before {
     content: "";
     position: absolute;
     z-index: -1;
+
     width: 340px;
     height: 340px;
+
     top: -230px;
     left: calc(50% - 170px);
+
     border: 1px solid rgba(139, 124, 255, 0.3);
     border-radius: 50%;
+
     box-shadow:
         0 0 70px rgba(98, 85, 217, 0.13),
         inset 0 0 70px rgba(98, 85, 217, 0.1);
@@ -99,28 +118,38 @@ header::before {
 header h1 {
     max-width: 1000px;
     margin: 0 auto 18px;
+
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: clamp(2.8rem, 7vw, 5.8rem);
     font-weight: 500;
     line-height: 1.05;
     letter-spacing: -0.035em;
+
     background: linear-gradient(
         110deg,
         #ffffff 15%,
         #c6c1ff 52%,
         #83caff 90%
     );
+
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+
+    overflow-wrap: anywhere;
 }
 
 header p {
     max-width: 570px;
     margin: 0 auto;
+
     color: var(--muted);
     font-size: clamp(0.95rem, 2vw, 1.1rem);
 }
+
+/* =========================================
+   MAIN CONTENT
+   ========================================= */
 
 main {
     width: min(1100px, 100%);
@@ -130,7 +159,9 @@ main {
 
 main h2 {
     margin: 0 0 8px;
+
     color: #d5ceff;
+
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: clamp(2.1rem, 4vw, 3.2rem);
     font-weight: 500;
@@ -142,9 +173,14 @@ main > p {
     color: var(--muted);
 }
 
+/* =========================================
+   STORY COLLECTION
+   ========================================= */
+
 .stories-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
     gap: 22px;
     margin-top: 32px;
 }
@@ -152,16 +188,22 @@ main > p {
 .story-card {
     position: relative;
     overflow: hidden;
+
+    min-width: 0;
     padding: 28px;
+
     border: 1px solid var(--border);
     border-radius: 18px;
+
     background:
         linear-gradient(
             145deg,
             rgba(28, 34, 70, 0.86),
             rgba(15, 19, 42, 0.96)
         );
+
     box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14);
+
     transition:
         transform 220ms ease,
         border-color 220ms ease,
@@ -171,16 +213,25 @@ main > p {
 .story-card::before {
     content: "";
     position: absolute;
+
     top: 0;
     left: 28px;
+
     width: 56px;
     height: 2px;
-    background: linear-gradient(90deg, var(--purple), var(--blue));
+
+    background: linear-gradient(
+        90deg,
+        var(--purple),
+        var(--blue)
+    );
 }
 
 .story-card:hover {
     transform: translateY(-5px);
+
     border-color: rgba(139, 124, 255, 0.55);
+
     box-shadow:
         0 18px 50px rgba(0, 0, 0, 0.25),
         0 0 28px rgba(98, 85, 217, 0.1);
@@ -188,10 +239,13 @@ main > p {
 
 .story-card h3 {
     margin: 0 0 8px;
+
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 1.8rem;
     font-weight: 600;
     line-height: 1.25;
+
+    overflow-wrap: anywhere;
 }
 
 .story-card p {
@@ -200,7 +254,9 @@ main > p {
 
 .story-card .story-genre {
     display: inline-block;
+
     margin: 0 0 10px;
+
     color: var(--blue);
     font-size: 0.75rem;
     font-weight: 700;
@@ -208,31 +264,83 @@ main > p {
     text-transform: uppercase;
 }
 
-::selection {
-    background: var(--purple);
-    color: var(--background);
-}
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
 
 @media (max-width: 640px) {
+
+    body {
+        font-size: 15px;
+    }
+
     header {
-        padding: 84px 20px;
+        padding: 76px 18px;
+    }
+
+    header h1 {
+        font-size: clamp(2.4rem, 10vw, 3.5rem);
+        line-height: 1.08;
+    }
+
+    header p {
+        max-width: 420px;
+        font-size: 0.95rem;
     }
 
     main {
-        padding: 48px 18px;
+        padding: 44px 18px;
+    }
+
+    main h2 {
+        font-size: 2.3rem;
     }
 
     .stories-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 16px;
+        margin-top: 26px;
     }
 
     .story-card {
         padding: 24px;
+        border-radius: 15px;
+    }
+
+    .story-card h3 {
+        font-size: 1.65rem;
+    }
+
+    .story-card:hover {
+        transform: none;
     }
 }
 
+/* Extra-small phones */
+
+@media (max-width: 360px) {
+
+    header {
+        padding: 64px 15px;
+    }
+
+    header h1 {
+        font-size: 2.25rem;
+    }
+
+    main {
+        padding: 36px 15px;
+    }
+
+    .story-card {
+        padding: 20px;
+    }
+}
+
+/* Reduced motion accessibility */
+
 @media (prefers-reduced-motion: reduce) {
+
     html {
         scroll-behavior: auto;
     }
@@ -242,4 +350,11 @@ main > p {
     *::after {
         transition-duration: 0.01ms !important;
     }
+}
+
+/* Text selection */
+
+::selection {
+    background: var(--purple);
+    color: var(--background);
 }
