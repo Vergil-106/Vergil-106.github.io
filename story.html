@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story | BizzareWorldOfStories</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .story-detail {
+            max-width: 900px;
+            margin: 70px auto;
+            padding: 30px 24px;
+        }
+
+        .story-cover {
+            width: 100%;
+            min-height: 280px;
+            max-height: 430px;
+            object-fit: cover;
+            border-radius: 18px;
+            background:
+                radial-gradient(circle at 70% 35%, #6255d9, transparent 35%),
+                linear-gradient(135deg, #171c42, #080b1c);
+            margin-bottom: 35px;
+        }
+
+        .story-label {
+            color: #72bfff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .story-detail h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin: 12px 0;
+        }
+
+        .story-description {
+            color: #b9b8cd;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            max-width: 700px;
+        }
+
+        .read-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 28px;
+            border-radius: 30px;
+            background: linear-gradient(110deg, #6255d9, #72bfff);
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .read-button:hover {
+            transform: translateY(-3px);
+            opacity: 0.9;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #b9b8cd;
+            text-decoration: none;
+            margin-bottom: 25px;
+        }
+
+        .back-link:hover {
+            color: #72bfff;
+        }
+
+        .page-message {
+            text-align: center;
+            padding: 100px 20px;
+            color: #b9b8cd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="story-detail" id="story-container">
+        <p class="page-message">Opening the archive...</p>
+    </main>
+
+    <script>
+        async function loadStory() {
+            const container = document.getElementById("story-container");
+            const params = new URLSearchParams(window.location.search);
+            const storyId = params.get("id");
+
+            if (!storyId) {
+                container.textContent = "No story was selected.";
+                return;
+            }
+
+            try {
+                const response = await fetch("./stories.json");
+
+                if (!response.ok) {
+                    throw new Error("Could not load stories.");
+                }
+
+                const stories = await response.json();
+                const story = stories.find(item => item.id === storyId);
+
+                if (!story) {
+                    container.textContent = "This story could not be found.";
+                    return;
+                }
+
+                document.title = story.title + " | BizzareWorldOfStories";
+
+                container.replaceChildren();
+
+                const back = document.createElement("a");
+                back.href = "index.html";
+                back.className = "back-link";
+                back.textContent = "← Back to the Archive";
+
+                const cover = document.createElement("img");
+                cover.className = "story-cover";
+                cover.alt = story.title + " cover";
+
+                if (story.cover) {
+                    cover.src = story.cover;
+                } else {
+                    cover.hidden = true;
+                }
+
+                const genre = document.createElement("p");
+                genre.className = "story-label";
+                genre.textContent = story.genre || "Unclassified";
+
+                const title = document.createElement("h1");
+                title.textContent = story.title;
+
+                const description = document.createElement("p");
+                description.className = "story-description";
+                description.textContent = story.description;
+
+                const readButton = document.createElement("a");
+                readButton.className = "read-button";
+                readButton.href =
+                    "reader.html?id=" + encodeURIComponent(story.id) + "&chapter=0";
+                readButton.textContent = "Begin Reading →";
+
+                container.append(
+                    back,
+                    cover,
+                    genre,
+                    title,
+                    description,
+                    readButton
+                );
+
+            } catch (error) {
+                container.textContent =
+                    "The archive could not be opened. Please try again later.";
+                console.error(error);
+            }
+        }
+
+        loadStory();
+    </script>
+
+</body>
+</html>
