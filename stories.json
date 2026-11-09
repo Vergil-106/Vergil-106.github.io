@@ -1,0 +1,42 @@
+
+[
+  {
+    "id": "the-first-story",
+    "title": "The First Story",
+    "genre": "Fantasy",
+    "description": "A mysterious world awaits beyond the ordinary.",
+    "cover": "",
+    "chapters": [
+      {
+        "title": "Chapter 1",
+        "content": "Your story begins here. Replace this text with your own writing."
+      }
+    ]
+  },
+  {
+    "id": "the-second-story",
+    "title": "The Second Story",
+    "genre": "Mystery",
+    "description": "Every secret leaves a trace. Every answer raises a question.",
+    "cover": "",
+    "chapters": [
+      {
+        "title": "Chapter 1",
+        "content": "Your story begins here. Replace this text with your own writing."
+      }
+    ]
+  },
+  {
+      "id": "the-third-story",
+      "title": "The Third Story",
+      "genre": "Science Fiction",
+      "description": "A new mystery begins among the stars.",
+      "cover": "",
+      "chapters": [
+        {
+          "title": "Chapter 1: The Beginning",
+          "content": "The story begins here. Replace this with your own writing."
+        }
+      ]
+    }
+  ]
