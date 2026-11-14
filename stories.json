@@ -4,14 +4,10 @@
     "id": "the-lost-file-of-kisaragi-station",
     "title": "The Lost File of Kisaragi Station",
     "genre": "Horror",
-    "description": "An adventurous trip takes a Drastic turn when Ethan finds a lost phone..",
+    "description": "An adventurous trip takes a drastic turn when Ethan finds a lost phone.",
     "cover": "",
-    "chapters": [
-      {
-        "title": "Chapter 1",
-        "content": "Your story begins here. Replace this text with your own writing."
-      }
-    ]
+    "folder": "stories/the-lost-file-of-kisaragi-station",
+    "chapterCount": 1
   },
   {
     "id": "the-second-story",
