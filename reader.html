@@ -109,117 +109,140 @@
     </main>
 
     <script>
-        async function loadChapter() {
-            const container = document.getElementById("reader-container");
-            const params = new URLSearchParams(window.location.search);
+       async function loadChapter() {
+    const container = document.getElementById("reader-container");
+    const params = new URLSearchParams(window.location.search);
 
-            const storyId = params.get("id");
-            const requestedChapter = Number(params.get("chapter") || 0);
+    const storyId = params.get("id");
+    const requestedChapter = Number(params.get("chapter") || 0);
 
-            if (!storyId) {
-                container.textContent = "No story was selected.";
-                return;
-            }
+    if (!storyId) {
+        container.textContent = "No story was selected.";
+        return;
+    }
 
-            try {
-                const response = await fetch("./stories.json");
+    try {
+        const response = await fetch("./stories.json");
 
-                if (!response.ok) {
-                    throw new Error("Could not load stories.");
-                }
-
-                const stories = await response.json();
-                const story = stories.find(item => item.id === storyId);
-
-                if (!story) {
-                    container.textContent = "This story could not be found.";
-                    return;
-                }
-
-                if (!Array.isArray(story.chapters) || story.chapters.length === 0) {
-                    container.textContent = "No chapters are available yet.";
-                    return;
-                }
-
-                const chapterIndex = Number.isInteger(requestedChapter)
-                    ? Math.max(0, Math.min(requestedChapter, story.chapters.length - 1))
-                    : 0;
-
-                const chapter = story.chapters[chapterIndex];
-
-                document.title =
-                    chapter.title + " | " + story.title;
-
-                container.replaceChildren();
-
-                const back = document.createElement("a");
-                back.className = "reader-back";
-                back.href = "story.html?id=" + encodeURIComponent(story.id);
-                back.textContent = "← Back to Story Details";
-
-                const genre = document.createElement("p");
-                genre.className = "reader-genre";
-                genre.textContent = story.genre || "Unclassified";
-
-                const title = document.createElement("h1");
-                title.textContent = story.title;
-
-                const chapterTitle = document.createElement("h2");
-                chapterTitle.className = "chapter-heading";
-                chapterTitle.textContent = chapter.title;
-
-                const content = document.createElement("div");
-                content.className = "chapter-content";
-                content.textContent = chapter.content || "This chapter is empty.";
-
-                const navigation = document.createElement("nav");
-                navigation.className = "chapter-navigation";
-
-                const previous = document.createElement("a");
-                previous.className = "chapter-button";
-                previous.textContent = "← Previous Chapter";
-
-                const next = document.createElement("a");
-                next.className = "chapter-button";
-                next.textContent = "Next Chapter →";
-
-                const baseUrl =
-                    "reader.html?id=" + encodeURIComponent(story.id) +
-                    "&chapter=";
-
-                if (chapterIndex > 0) {
-                    previous.href = baseUrl + (chapterIndex - 1);
-                } else {
-                    previous.classList.add("disabled");
-                    previous.setAttribute("aria-disabled", "true");
-                }
-
-                if (chapterIndex < story.chapters.length - 1) {
-                    next.href = baseUrl + (chapterIndex + 1);
-                } else {
-                    next.classList.add("disabled");
-                    next.setAttribute("aria-disabled", "true");
-                }
-
-                navigation.append(previous, next);
-
-                container.append(
-                    back,
-                    genre,
-                    title,
-                    chapterTitle,
-                    content,
-                    navigation
-                );
-
-            } catch (error) {
-                container.textContent =
-                    "The reader could not be opened. Please try again later.";
-                console.error(error);
-            }
+        if (!response.ok) {
+            throw new Error("Could not load stories.");
         }
 
-        loadChapter();
+        const stories = await response.json();
+        const story = stories.find(item => item.id === storyId);
+
+        if (!story) {
+            container.textContent = "This story could not be found.";
+            return;
+        }
+
+        const totalChapters =
+            story.chapterCount || (story.chapters ? story.chapters.length : 0);
+
+        if (totalChapters === 0) {
+            container.textContent = "No chapters are available yet.";
+            return;
+        }
+
+        const chapterIndex = Number.isInteger(requestedChapter)
+            ? Math.max(0, Math.min(requestedChapter, totalChapters - 1))
+            : 0;
+
+        let chapter;
+
+        if (story.folder) {
+            const chapterResponse = await fetch(
+                story.folder + "/chapter-" + (chapterIndex + 1) + ".txt"
+            );
+
+            if (!chapterResponse.ok) {
+                throw new Error("Could not load chapter.");
+            }
+
+            const text = (await chapterResponse.text())
+                .replace(/^\uFEFF/, "")
+                .trim();
+            const lines = text.split("\n");
+
+            chapter = {
+                title: lines[0].trim(),
+                content: lines.slice(1).join("\n").trim()
+            };
+        } else {
+            chapter = story.chapters[chapterIndex];
+        }
+
+        document.title = chapter.title + " | " + story.title;
+
+        container.replaceChildren();
+
+        const back = document.createElement("a");
+        back.className = "reader-back";
+        back.href = "story.html?id=" + encodeURIComponent(story.id);
+        back.textContent = "← Back to Story Details";
+
+        const genre = document.createElement("p");
+        genre.className = "reader-genre";
+        genre.textContent = story.genre || "Unclassified";
+
+        const title = document.createElement("h1");
+        title.textContent = story.title;
+
+        const chapterTitle = document.createElement("h2");
+        chapterTitle.className = "chapter-heading";
+        chapterTitle.textContent = chapter.title;
+
+        const content = document.createElement("div");
+        content.className = "chapter-content";
+        content.textContent = chapter.content || "This chapter is empty.";
+
+        const navigation = document.createElement("nav");
+        navigation.className = "chapter-navigation";
+
+        const previous = document.createElement("a");
+        previous.className = "chapter-button";
+        previous.textContent = "← Previous Chapter";
+
+        const next = document.createElement("a");
+        next.className = "chapter-button";
+        next.textContent = "Next Chapter →";
+
+        const baseUrl =
+            "reader.html?id=" + encodeURIComponent(story.id) + "&chapter=";
+
+        if (chapterIndex > 0) {
+            previous.href = baseUrl + (chapterIndex - 1);
+        } else {
+            previous.classList.add("disabled");
+            previous.setAttribute("aria-disabled", "true");
+        }
+
+        if (chapterIndex < totalChapters - 1) {
+            next.href = baseUrl + (chapterIndex + 1);
+        } else {
+            next.classList.add("disabled");
+            next.setAttribute("aria-disabled", "true");
+        }
+
+        navigation.append(previous, next);
+
+        container.append(
+            back,
+            genre,
+            title,
+            chapterTitle,
+            content,
+            navigation
+        );
+
+    } catch (error) {
+        container.textContent =
+            "The reader could not be opened. Please try again later.";
+        console.error(error);
+    }
+}
+
+loadChapter();
     </script>
 
 </body>
